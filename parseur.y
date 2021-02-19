@@ -10,6 +10,11 @@
 
 %token NOMBRE
 %token PT_VIRG
+
+%left '+' '-'
+%left '*' '/'
+%nonassoc MOINSU
+
 %start resultat /* axiom */
 
 %%
@@ -28,19 +33,12 @@ commande:
     ;
 
 expression:
-      expression '+' terme
-    | expression '-' terme
-    | terme
-    ;
-
-terme:
-      terme '*' facteur
-    | facteur
-    ;
-
-facteur:
+      expression '+' expression
+    | expression '-' expression
+    | expression '*' expression
+    | expression '/' expression
     | '(' expression ')'
-    | '-' facteur
+    | '-' expression %prec MOINSU
     | NOMBRE
     ;
 
