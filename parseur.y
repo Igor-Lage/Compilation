@@ -9,28 +9,40 @@
 %}
 
 %token NOMBRE
+%token PT_VIRG
 %start resultat /* axiom */
 
 %%
 
-resultat: expression ;
+resultat:
+      programme
+    ;
+    
+programme:
+      commande
+    | commande programme
+    ;
+    
+commande: 
+      expression PT_VIRG
+    ;
 
 expression:
       expression '+' terme
     | expression '-' terme
     | terme
-;
+    ;
 
 terme:
       terme '*' facteur
     | facteur
-;
+    ;
 
 facteur:
     | '(' expression ')'
     | '-' facteur
     | NOMBRE
-;
+    ;
 
 %%
 
